@@ -77,6 +77,38 @@ $this->title = $name .' Yetkilendirmesi';
             ],],
         ],
     ]); ?>
+
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProviderOne,
+       
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+           
+
+            'username',
+            'name',
+            'surname',  
+            
+
+            ['class' => 'yii\grid\ActionColumn', 'template'=>'{delete}',
+               
+            'buttons' => [
+
+
+               'delete' => function ($data,$model) {
+
+                                return Html::a('<span class="glyphicon glyphicon-plus"></span>', 
+                                    ['album/del','id'=>$model->id]
+                                );
+                },
+
+                  
+                 
+
+            ],],
+        ],
+    ]); ?>
     
  
    

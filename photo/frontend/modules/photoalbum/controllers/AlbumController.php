@@ -54,10 +54,31 @@ class AlbumController extends Controller
       $searchModel = new FriendsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $dataProviderOne = new ActiveDataProvider([
+            'query' => Yetki::find()->where(['id'=>''.$id]),
+        ]);
+
+
         return $this->render('access', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'dataProviderOne' => $dataProviderOne,
         ]);
+    }
+
+    public function actionDel($id)
+    {
+            $sql=(new \yii\db\Query())->createCommand()->delete('yetki', 'id ='. "'$id'")->execute();
+            $dataProvider = new ActiveDataProvider([
+            'query' => Album::find()->where(['owner_id'=>''.Yii::$app->user->getId()]),
+        ]);
+
+      
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+
     }
 
     public function actionSharable($albumId,$username,$name,$surname)
